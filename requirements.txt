@@ -1,0 +1,44 @@
+django==1.9.6
+django-model-utils==2.5
+django-compressor==2.0
+django-extensions==1.6.7
+
+# Storage stuff
+redis==2.10.5
+hiredis==0.2.0
+django-redis==4.2.0
+psycopg2==2.6.1
+pytz==2015.7
+
+# Assets
+django-thumbnails==0.1.3
+django-pipeline==1.5.4
+django-pipeline-compass==0.1.5
+
+# API
+djangorestframework==3.2.4
+requests==2.9.1
+
+# 3rd parties
+raven==5.7.2
+
+#pillow==3.0
+
+# Phonenumber
+id-phonenumbers==0.1.2
+phonenumberslite==7.1.0
+
+django-cached-authentication-middleware==0.2.1
+
+# Unit Testing
+responses==0.5.1
+
+# Time helper
+python-dateutil==1.5
+
+bpython==0.15
+
+python-gcm==0.3
+
+rq==0.5.6
+django-rq==0.8.0
