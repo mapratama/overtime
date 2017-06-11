@@ -1,7 +1,7 @@
-from nindya.api.response import ErrorResponse
-from nindya.api.views import SessionAPIView
-from nindya.apps.overtimes.models import Overtime
-from nindya.core.serializers import serialize_overtime
+from overtime.api.response import ErrorResponse
+from overtime.api.views import SessionAPIView
+from overtime.apps.overtimes.models import Overtime
+from overtime.core.serializers import serialize_overtime
 
 from rest_framework import status
 from rest_framework.response import Response

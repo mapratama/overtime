@@ -4,8 +4,8 @@ from dateutil.relativedelta import relativedelta
 from django import forms
 from django.utils import timezone
 
-from nindya.apps.users.models import User
-from nindya.core.fields import MobileNumberField
+from overtime.apps.users.models import User
+from overtime.core.fields import MobileNumberField
 
 
 class APIRegistrationForm(forms.Form):

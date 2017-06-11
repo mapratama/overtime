@@ -26,7 +26,7 @@ def send_notification(user, data, async=True):
 
 
 def send_coordinator_notification():
-    from nindya.apps.users.models import User
+    from overtime.apps.users.models import User
     users = User.objects.filter(is_active=True, type=User.TYPE.coordinator)
     for user in users:
         notification_data = {
@@ -38,7 +38,7 @@ def send_coordinator_notification():
 
 
 def send_manager_notification():
-    from nindya.apps.users.models import User
+    from overtime.apps.users.models import User
     users = User.objects.filter(is_active=True, type=User.TYPE.manager)
     for user in users:
         notification_data = {

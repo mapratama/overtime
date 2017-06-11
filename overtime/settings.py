@@ -1,5 +1,5 @@
 """
-Django settings for nindya project.
+Django settings for overtime project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -55,8 +55,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'django_rq',
 
-    'nindya.apps.users',
-    'nindya.apps.overtimes',
+    'overtime.apps.users',
+    'overtime.apps.overtimes',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -112,9 +112,9 @@ THUMBNAILS = {
     }
 }
 
-ROOT_URLCONF = 'nindya.urls'
+ROOT_URLCONF = 'overtime.urls'
 
-WSGI_APPLICATION = 'nindya.wsgi.application'
+WSGI_APPLICATION = 'overtime.wsgi.application'
 
 
 # Database
@@ -149,7 +149,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
 AUTH_USER_MODEL = 'users.User'
-CACHED_AUTH_PREPROCESSOR = 'nindya.apps.users.models.cached_auth_preprocessor'
+CACHED_AUTH_PREPROCESSOR = 'overtime.apps.users.models.cached_auth_preprocessor'
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 

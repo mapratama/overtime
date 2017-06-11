@@ -1,8 +1,8 @@
 from django import forms
 
-from nindya.apps.overtimes.models import Overtime
-from nindya.core.fields import TimeStampField
-from nindya.core.notifications import (send_coordinator_notification,
+from overtime.apps.overtimes.models import Overtime
+from overtime.core.fields import TimeStampField
+from overtime.core.notifications import (send_coordinator_notification,
                                        send_manager_notification,
                                        send_accepted_coordinator_notification,
                                        send_accepted_manager_notification)

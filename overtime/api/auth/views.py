@@ -1,7 +1,7 @@
-from nindya.api.response import ErrorResponse
-from nindya.api.views import NindyaAPIView, SessionAPIView
-from nindya.core.utils import force_login
-from nindya.core.serializers import serialize_user, serialize_overtime
+from overtime.api.response import ErrorResponse
+from overtime.api.views import overtimeAPIView, SessionAPIView
+from overtime.core.utils import force_login
+from overtime.core.serializers import serialize_user, serialize_overtime
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from .forms import APIRegistrationForm
 
 
-class Login(NindyaAPIView):
+class Login(overtimeAPIView):
 
     def post(self, request):
         form = AuthenticationForm(data=request.data)
@@ -39,7 +39,7 @@ class Login(NindyaAPIView):
         return ErrorResponse(form=form)
 
 
-class Register(NindyaAPIView):
+class Register(overtimeAPIView):
 
     def post(self, request):
         form = APIRegistrationForm(data=request.data)

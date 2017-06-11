@@ -4,9 +4,9 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin,
 from django.db import models
 from django.utils import timezone
 
-from nindya.apps.overtimes.models import Overtime
-from nindya.core.validators import validate_mobile_phone
-from nindya.core.notifications import send_activated_user_notification
+from overtime.apps.overtimes.models import Overtime
+from overtime.core.validators import validate_mobile_phone
+from overtime.core.notifications import send_activated_user_notification
 
 from model_utils import Choices
 

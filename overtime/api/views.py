@@ -7,7 +7,7 @@ from .parsers import JSONParser
 from .permissions import IsSecure
 
 
-class NindyaAPIView(APIView):
+class overtimeAPIView(APIView):
     permission_classes = (IsSecure,)
     authentication_classes = (JSONSingleTokenAuthentication,)
 
@@ -17,6 +17,6 @@ class NindyaAPIView(APIView):
     logging_key = None
 
 
-class SessionAPIView(NindyaAPIView):
+class SessionAPIView(overtimeAPIView):
 
     authentication_classes = (JSONSingleTokenAuthentication, APISessionAuthentication)
