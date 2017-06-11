@@ -11,7 +11,7 @@ from webservers import setup_webserver
 from fabtools import require, service, systemd
 
 
-def setup_env(target_dir='nindya'):
+def setup_env(target_dir='overtime'):
     env.PROJECT_NAME = target_dir
     env.PROJECT_PATH = '/var/www/%s/' % env.PROJECT_NAME
     env.SRC_PATH = os.path.join(env.PROJECT_PATH, 'src')
@@ -51,7 +51,7 @@ def create_deployment_key():
         sudo('ssh-keygen -f {0}'.format(env.DEPLOYMENT_KEY), user='www-data')
 
 
-def deploy_project(target_dir='nindya'):
+def deploy_project(target_dir='overtime'):
     """ Deploys a project for the first time """
     # setup_env(target_dir)
 
@@ -78,13 +78,13 @@ def deploy_project(target_dir='nindya'):
         # 'db_pass': env.db_pass,
     # }
     # sudo('mv %ssettings_local.py.tpl %s/%s/settings_local.py' %
-        # (env.HOME_PATH, env.SRC_PATH, env.PROJECT_NAME))
+    #     (env.HOME_PATH, env.SRC_PATH, env.PROJECT_NAME))
     # install_project_requirements()
     # install_front_end_requirements()
-    # collect_static()
+    collect_static()
     # compress_static()
-    sudo('chown -R www-data.www-data %s' % env.PROJECT_PATH)
-    migrate()
+    # sudo('chown -R www-data.www-data %s' % env.PROJECT_PATH)
+    # migrate()
 
 
 def check_django_shell():
@@ -100,7 +100,7 @@ def run_test():
     local("python manage.py test --failfast")
 
 
-def update_project(skip_test="true", target_dir='nindya', init_module='systemd'):
+def update_project(skip_test="true", target_dir='overtime', init_module='systemd'):
     """ Updates the source directory with most recent code, create migration
     and then restarts the webserver """
     setup_env(target_dir)
@@ -150,9 +150,9 @@ def update_project(skip_test="true", target_dir='nindya', init_module='systemd')
     # compress_static()
     # copy_email_templates()
 
-    init_module.restart("nindya")
+    init_module.restart("overtime")
     # if target_dir == 'nindya':
-    #     init_module.restart('rqworker')
+    init_module.restart('rqworker')
         # init_module.restart('rqworker-elastic')
         # with settings(warn_only=True):
         #     init_module.restart('rqworker2')
@@ -213,7 +213,7 @@ def setup_os():
 def update_git_repo():
     """ Creates or update user's git repository for this project """
     if not exists('%s%s' % (env.HOME_PATH, env.PROJECT_NAME)):
-        git_cmd = 'git clone git@github.com:mapratama/nindya.git {}'.format(env.SRC_PATH)
+        git_cmd = 'git clone git@github.com:mapratama/overtime.git {}'.format(env.SRC_PATH)
         print """Your git repository for this project doesn't exist.
                  Now running "%s" in %s.""" % (git_cmd, env.HOME_PATH)
         with settings(warn_only=True):
@@ -245,7 +245,7 @@ def update_source_code(path=None):
         if not exists(env.DEPLOYMENT_KEY, use_sudo=True):
             create_deployment_key()
 
-        git_cmd = 'git clone git@github.com:mapratama/nindya.git {}'.format(path)
+        git_cmd = 'git clone git@github.com:mapratama/overtime.git {}'.format(path)
         require.files.directory(env.PROJECT_PATH, use_sudo=True)
         sudo('chown -R www-data {0}'.format(env.PROJECT_PATH))
         with cd(env.PROJECT_PATH):
