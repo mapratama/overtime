@@ -60,7 +60,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     position = models.CharField('Jabatan', max_length=255, blank=True, null=True)
 
     DEPARTMENT = Choices(
-        (1, 'teknas', 'Teknas'),
+        (1, 'tekmas', 'Tekmas'),
         (2, 'keuangan', 'Keuangan'),
         (3, 'produksi', 'Produksi'),
     )
@@ -68,6 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     push_notification_key = models.CharField(blank=True, default='', max_length=254)
     is_staff = models.BooleanField('staff status', default=False)
     is_active = models.BooleanField('aktif', default=True)
+    has_been_activated = models.BooleanField(default=True)
     date_joined = models.DateTimeField('Tanggal Terdaftar', default=timezone.now)
 
     objects = CustomUserManager()
@@ -81,25 +82,22 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __unicode__(self):
         return self.name or self.email or 'User #%d' % (self.id)
 
-    # def save(self, *args, **kwargs):
-    #     user_is_active = self.is_active
-    #     print user_is_active
-    #     user = super(User, self).save(*args, **kwargs)
-    #     print user
-    #     if user:
-    #         print 'masuk'
-    #         if user.is_active and user.is_active != user_is_active:
-    #             send_activated_user_notification()
-    #     return user
+    def save(self, *args, **kwargs):
+        if self.is_active and not self.has_been_activated:
+            send_activated_user_notification(self)
+            self.has_been_activated = True
+        user = super(User, self).save(*args, **kwargs)
+        return user
 
     def get_short_name(self):
         return self.email
 
     def get_overtimes(self):
         if self.type == User.TYPE.coordinator:
-            return Overtime.objects.all()
+            return Overtime.objects.filter(user__department=self.department)
         elif self.type == User.TYPE.manager:
-            return Overtime.objects.exclude(status=Overtime.STATUS.bid)
+            return Overtime.objects.filter(user__department=self.department)\
+                .exclude(status=Overtime.STATUS.bid)
         else:
             return self.overtimes.all()
 

@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from .forms import (AddOvertimeForm, ApprovedCoordinatorForm,
-                    ApprovedManagerForm)
+                    ApprovedManagerForm, CanceledForm)
 
 
 class Add(SessionAPIView):
@@ -48,6 +48,15 @@ class ApprovedCoordinator(SessionAPIView):
 class ApprovedManager(SessionAPIView):
     def post(self, request):
         form = ApprovedManagerForm(data=request.data)
+        if form.is_valid():
+            overtime = form.save(request.user)
+            return Response(serialize_overtime(overtime), status=status.HTTP_200_OK)
+        return ErrorResponse(form=form)
+
+
+class Canceled(SessionAPIView):
+    def post(self, request):
+        form = CanceledForm(data=request.data)
         if form.is_valid():
             overtime = form.save(request.user)
             return Response(serialize_overtime(overtime), status=status.HTTP_200_OK)
