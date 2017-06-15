@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 
-from .views import Add, Index, Details, ApprovedCoordinator, ApprovedManager
+from .views import (Add, Index, Details, ApprovedCoordinator, ApprovedManager,
+                    Canceled)
 
 
 urlpatterns = patterns('',
@@ -11,4 +12,5 @@ urlpatterns = patterns('',
         ApprovedCoordinator.as_view(), name='approved_coordinator'),
     url(r'^approved_manager$',
         ApprovedManager.as_view(), name='approved_manager'),
+    url(r'^canceled$', Canceled.as_view(), name='canceled'),
 )

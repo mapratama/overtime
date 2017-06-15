@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from overtime.apps.users.models import User
 from overtime.core.fields import MobileNumberField
+from overtime.core.notifications import send_need_approval_notification
 
 
 class APIRegistrationForm(forms.Form):
@@ -58,7 +59,8 @@ class APIRegistrationForm(forms.Form):
             department=self.cleaned_data['department'],
             mobile_number=self.cleaned_data['mobile_number'],
             push_notification_key=self.cleaned_data['push_notification_key'],
-            is_active=False
+            is_active=False,
+            has_been_activated=False
         )
         user.set_password(self.cleaned_data['password'])
 
@@ -68,6 +70,7 @@ class APIRegistrationForm(forms.Form):
         if self.cleaned_data['position']:
             user.position = self.cleaned_data['position']
 
+        send_need_approval_notification()
         user.save()
 
         return user

@@ -25,9 +25,11 @@ def send_notification(user, data, async=True):
         return
 
 
-def send_coordinator_notification():
+def send_coordinator_notification(user):
     from overtime.apps.users.models import User
-    users = User.objects.filter(is_active=True, type=User.TYPE.coordinator)
+    users = User.objects.filter(is_active=True, type=User.TYPE.coordinator,
+                                department=user.department)
+    print users
     for user in users:
         notification_data = {
             'title': 'Pengajuan Lembur Baru',
@@ -37,9 +39,10 @@ def send_coordinator_notification():
         send_notification(user, notification_data)
 
 
-def send_manager_notification():
+def send_manager_notification(user):
     from overtime.apps.users.models import User
-    users = User.objects.filter(is_active=True, type=User.TYPE.manager)
+    users = User.objects.filter(is_active=True, type=User.TYPE.manager,
+                                department=user.department)
     for user in users:
         notification_data = {
             'title': 'Pengajuan Lembur Baru',
@@ -80,3 +83,32 @@ def send_activated_user_notification(user):
         'action': 'activated_user'
     }
     send_notification(user, notification_data)
+
+
+def send_canceled_notification(overtime, canceled_by_manager=True):
+    if canceled_by_manager:
+        position = 'Manager'
+    else:
+        position = 'Koordinator'
+
+    notification_data = {
+        'title': 'Pengajuan Anda Ditolak',
+        'body': ('Pengajuan anda ditolak oleh %s, silahkan lihat data '
+                 'pengajuan untuk melihat detail penolakan' % position),
+        'action': 'sync_overtime_details',
+        'extra_data': overtime.id
+    }
+    send_notification(overtime.user, notification_data)
+
+
+def send_need_approval_notification():
+    from overtime.apps.users.models import User
+    users = User.objects.filter(is_superuser=True)
+    for user in users:
+        notification_data = {
+            'title': 'Terdapat User Baru',
+            'body': 'Terdapat user baru yang telah melakukan registrasi. '
+                    'Silahkan cek data untuk aktifasi user tersebut di dalam web',
+            'action': 'sync_overtime',
+        }
+        send_notification(user, notification_data)
