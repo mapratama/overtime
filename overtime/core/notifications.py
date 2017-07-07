@@ -25,11 +25,20 @@ def send_notification(user, data, async=True):
         return
 
 
+def send_new_overtime_notification(user, created_by):
+    notification_data = {
+        'title': 'Penunjukan Lembur oleh %s' % created_by,
+        'body': 'Terdapat penunjukan lembur baru dari % s, '
+                'silahkan reload data lembur di dalam aplikasi' % created_by,
+        'action': 'sync_overtime',
+    }
+    send_notification(user, notification_data)
+
+
 def send_coordinator_notification(user):
     from overtime.apps.users.models import User
     users = User.objects.filter(is_active=True, type=User.TYPE.coordinator,
                                 department=user.department)
-    print users
     for user in users:
         notification_data = {
             'title': 'Pengajuan Lembur Baru',

@@ -12,9 +12,9 @@ from .forms import (AddOvertimeForm, ApprovedCoordinatorForm,
 
 class Add(SessionAPIView):
     def post(self, request):
-        form = AddOvertimeForm(data=request.data)
+        form = AddOvertimeForm(data=request.data, user=request.user)
         if form.is_valid():
-            overtime = form.save(request.user)
+            overtime = form.save()
             return Response(serialize_overtime(overtime), status=status.HTTP_200_OK)
         return ErrorResponse(form=form)
 
