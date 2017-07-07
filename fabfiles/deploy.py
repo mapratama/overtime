@@ -61,12 +61,12 @@ def deploy_project(target_dir='overtime'):
     # setup_os()
     # require.files.directory(env.PROJECT_PATH, use_sudo=True,
     #                         owner='www-data', group='www-data')
-    # update_source_code()
-    # setup_virtualenv()
-    # log_dir = os.path.join(env.PROJECT_PATH, 'logs')
-    # require.files.directory(log_dir, use_sudo=True,
-    #                         owner='www-data', group='www-data')
-    # setup_webserver()
+    update_source_code()
+    setup_virtualenv()
+    log_dir = os.path.join(env.PROJECT_PATH, 'logs')
+    require.files.directory(log_dir, use_sudo=True,
+                            owner='www-data', group='www-data')
+    setup_webserver()
 
     # TODO: Create DB is broken
     # create_db()
@@ -79,12 +79,12 @@ def deploy_project(target_dir='overtime'):
     # }
     # sudo('mv %ssettings_local.py.tpl %s/%s/settings_local.py' %
     #     (env.HOME_PATH, env.SRC_PATH, env.PROJECT_NAME))
-    # install_project_requirements()
+    install_project_requirements()
     # install_front_end_requirements()
     collect_static()
     # compress_static()
-    # sudo('chown -R www-data.www-data %s' % env.PROJECT_PATH)
-    # migrate()
+    sudo('chown -R www-data.www-data %s' % env.PROJECT_PATH)
+    migrate()
 
 
 def check_django_shell():
