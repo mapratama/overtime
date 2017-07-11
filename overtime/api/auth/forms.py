@@ -6,7 +6,8 @@ from django.utils import timezone
 
 from overtime.apps.users.models import User
 from overtime.core.fields import MobileNumberField
-from overtime.core.notifications import send_need_approval_notification
+from overtime.core.notifications import (send_need_approval_notification,
+                                         send_new_forgets_notification)
 
 
 class APIRegistrationForm(forms.Form):
@@ -74,3 +75,32 @@ class APIRegistrationForm(forms.Form):
         user.save()
 
         return user
+
+
+class ResetPasswordForm(forms.Form):
+    email = forms.EmailField()
+
+    def __init__(self, *args, **kwargs):
+        super(ResetPasswordForm, self).__init__(*args, **kwargs)
+        self.user = None
+
+    def clean(self):
+        cleaned_data = super(ResetPasswordForm, self).clean()
+
+        if self.errors:
+            return cleaned_data
+
+        email = cleaned_data['email'].lower().strip()
+        users = User.objects.filter(email=email)
+        if not users.exists():
+            raise forms.ValidationError("Maaf email tidak ditemukan")
+
+        self.user = users.first()
+
+        return cleaned_data
+
+    def save(self):
+        forget = self.user.forgets.create()
+        send_new_forgets_notification()
+
+        return forget

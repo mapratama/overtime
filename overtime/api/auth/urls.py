@@ -1,10 +1,12 @@
 from django.conf.urls import patterns, url
 
-from .views import Login, Register, Logout, NotificationUpdate
+from .views import ChangePassword, Login, Register, ResetPassword, Logout, NotificationUpdate
 
 
 urlpatterns = patterns('',
     url(r'^login$', Login.as_view(), name='login'),
+    url(r'^change-password$', ChangePassword.as_view(), name='change_password'),
+    url(r'^reset-password$', ResetPassword.as_view(), name='reset_password'),
     url(r'^register$', Register.as_view(), name='register'),
     url(r'^notification-update$', NotificationUpdate.as_view(), name='notification_update'),
     url(r'^logout$', Logout.as_view(), name='logout')

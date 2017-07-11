@@ -1,18 +1,18 @@
 from overtime.api.response import ErrorResponse
-from overtime.api.views import overtimeAPIView, SessionAPIView
+from overtime.api.views import OvertimeAPIView, SessionAPIView
 from overtime.core.utils import force_login
 from overtime.core.serializers import serialize_user, serialize_overtime
 
 from django.contrib.auth import login, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 from rest_framework import status
 from rest_framework.response import Response
 
-from .forms import APIRegistrationForm
+from .forms import APIRegistrationForm, ResetPasswordForm
 
 
-class Login(overtimeAPIView):
+class Login(OvertimeAPIView):
 
     def post(self, request):
         form = AuthenticationForm(data=request.data)
@@ -39,7 +39,7 @@ class Login(overtimeAPIView):
         return ErrorResponse(form=form)
 
 
-class Register(overtimeAPIView):
+class Register(OvertimeAPIView):
 
     def post(self, request):
         form = APIRegistrationForm(data=request.data)
@@ -66,3 +66,23 @@ class NotificationUpdate(SessionAPIView):
         user.save()
 
         return Response({'status': 'ok'}, status=status.HTTP_200_OK)
+
+
+class ResetPassword(OvertimeAPIView):
+
+    def post(self, request):
+        form = ResetPasswordForm(data=request.data)
+        if form.is_valid():
+            form.save()
+            return Response({"status": "oke"}, status=status.HTTP_200_OK)
+        return ErrorResponse(form=form)
+
+
+class ChangePassword(SessionAPIView):
+
+    def post(self, request):
+        form = PasswordChangeForm(data=request.data, user=request.user)
+        if form.is_valid():
+            form.save()
+            return Response({'status': 'ok'}, status=status.HTTP_200_OK)
+        return ErrorResponse(form=form)

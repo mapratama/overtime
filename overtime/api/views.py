@@ -7,7 +7,7 @@ from .parsers import JSONParser
 from .permissions import IsSecure
 
 
-class overtimeAPIView(APIView):
+class OvertimeAPIView(APIView):
     permission_classes = (IsSecure,)
     authentication_classes = (JSONSingleTokenAuthentication,)
 
@@ -17,6 +17,6 @@ class overtimeAPIView(APIView):
     logging_key = None
 
 
-class SessionAPIView(overtimeAPIView):
+class SessionAPIView(OvertimeAPIView):
 
     authentication_classes = (JSONSingleTokenAuthentication, APISessionAuthentication)

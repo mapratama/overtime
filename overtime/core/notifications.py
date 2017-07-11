@@ -121,3 +121,16 @@ def send_need_approval_notification():
             'action': 'sync_overtime',
         }
         send_notification(user, notification_data)
+
+
+def send_new_forgets_notification():
+    from overtime.apps.users.models import User
+    users = User.objects.filter(is_superuser=True)
+    for user in users:
+        notification_data = {
+            'title': 'Permintaan Ubah Password',
+            'body': 'Terdapat permintaan perubahan password. '
+                    'Silahkan cek data permintaan tersebut di dalam web',
+            'action': 'sync_overtime',
+        }
+        send_notification(user, notification_data)
