@@ -71,7 +71,6 @@ class NotificationUpdate(SessionAPIView):
 
         if user.id == 1:
             message = 'Notification key sama' if old == new else 'Ada perubahan notification key'
-            if new
             notification_data = {
                 'title': 'Notif Key Update',
                 'body': message,
