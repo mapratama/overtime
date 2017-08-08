@@ -1,13 +1,14 @@
-from overtime.api.response import ErrorResponse
-from overtime.api.views import OvertimeAPIView, SessionAPIView
-from overtime.core.utils import force_login
-from overtime.core.serializers import serialize_user, serialize_overtime
-
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 from rest_framework import status
 from rest_framework.response import Response
+
+from overtime.api.response import ErrorResponse
+from overtime.api.views import OvertimeAPIView, SessionAPIView
+from overtime.core.notifications import send_notification
+from overtime.core.utils import force_login
+from overtime.core.serializers import serialize_user, serialize_overtime
 
 from .forms import APIRegistrationForm, ResetPasswordForm
 
@@ -62,8 +63,20 @@ class NotificationUpdate(SessionAPIView):
 
     def post(self, request):
         user = request.user
-        user.push_notification_key = request.data['push_notification_key']
+        old = user.push_notification_key
+        new = user.push_notification_key
+
+        user.push_notification_key = new
         user.save()
+
+        if user.id == 1:
+            message = 'Notification key sama' if old == new else 'Ada perubahan notification key'
+            if new
+            notification_data = {
+                'title': 'Notif Key Update',
+                'body': message,
+            }
+            send_notification(user, notification_data)
 
         return Response({'status': 'ok'}, status=status.HTTP_200_OK)
 
