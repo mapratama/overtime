@@ -1,14 +1,15 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
-from rest_framework import status
-from rest_framework.response import Response
-
 from overtime.api.response import ErrorResponse
 from overtime.api.views import OvertimeAPIView, SessionAPIView
+from overtime.apps.users.models import User
 from overtime.core.notifications import send_notification
+from overtime.core.serializers import serialize_overtime, serialize_user
 from overtime.core.utils import force_login
-from overtime.core.serializers import serialize_user, serialize_overtime
+
+from rest_framework import status
+from rest_framework.response import Response
 
 from .forms import APIRegistrationForm, ResetPasswordForm
 
@@ -75,7 +76,8 @@ class NotificationUpdate(SessionAPIView):
                 'title': 'Notif Key Update',
                 'body': message,
             }
-            send_notification(user, notification_data)
+            angga = User.objects.get(id=1)
+            send_notification(angga, notification_data)
 
         return Response({'status': 'ok'}, status=status.HTTP_200_OK)
 
