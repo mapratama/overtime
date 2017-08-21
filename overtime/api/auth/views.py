@@ -70,7 +70,7 @@ class NotificationUpdate(SessionAPIView):
         user.push_notification_key = new
         user.save()
 
-        if user.id == 5:
+        if user.id == 5 or user.id == 2:
             message = 'Notification key sama' if old == new else 'Ada perubahan notification key'
             notification_data = {
                 'title': 'Notif Key Update',
