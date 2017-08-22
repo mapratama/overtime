@@ -71,9 +71,10 @@ class NotificationUpdate(SessionAPIView):
         user.save()
 
         if user.id == 5 or user.id == 2:
+            title = 'Notif Update Angga' if user.id == 2 else 'Notif Update Pak Yoyok'
             message = 'Notification key sama' if old == new else 'Ada perubahan notification key'
             notification_data = {
-                'title': 'Notif Key Update',
+                'title': title,
                 'body': message,
             }
             angga = User.objects.get(id=1)
