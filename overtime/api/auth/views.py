@@ -70,15 +70,14 @@ class NotificationUpdate(SessionAPIView):
         user.push_notification_key = new
         user.save()
 
-        if user.id == 5 or user.id == 2:
-            title = 'Notif Update Angga' if user.id == 2 else 'Notif Update Pak Yoyok'
-            message = 'Notification key sama' if old == new else 'Ada perubahan notification key'
-            notification_data = {
-                'title': title,
-                'body': message,
-            }
-            angga = User.objects.get(id=1)
-            send_notification(angga, notification_data)
+        title = 'Sync App %s' % user.name
+        message = 'Notification key sama' if old == new else 'Ada perubahan notification key'
+        notification_data = {
+            'title': title,
+            'body': message,
+        }
+        angga = User.objects.get(id=1)
+        send_notification(angga, notification_data)
 
         return Response({'status': 'ok'}, status=status.HTTP_200_OK)
 
