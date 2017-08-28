@@ -64,20 +64,8 @@ class NotificationUpdate(SessionAPIView):
 
     def post(self, request):
         user = request.user
-        old = user.push_notification_key
-        new = user.push_notification_key
-
-        user.push_notification_key = new
+        user.push_notification_key = request.data['push_notification_key']
         user.save()
-
-        title = 'Sync App %s' % user.name
-        message = 'Notification key sama' if old == new else 'Ada perubahan notification key'
-        notification_data = {
-            'title': title,
-            'body': message,
-        }
-        angga = User.objects.get(id=1)
-        send_notification(angga, notification_data)
 
         return Response({'status': 'ok'}, status=status.HTTP_200_OK)
 
