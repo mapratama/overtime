@@ -25,4 +25,4 @@ class Overtime(models.Model):
     created = AutoCreatedField()
 
     def __unicode__(self):
-        return 'Overtime #%s' % (self.id)
+        return '#%s. %s (%s)' % (self.id, self.user.name, self.created.strftime("%Y-%m-%d"))
