@@ -148,6 +148,7 @@ MIDTRANS_BASE_URL = 'https://app.sandbox.midtrans.com/snap/v1/transactions'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+SESSION_COOKIE_AGE = 62208000
 
 AUTH_USER_MODEL = 'users.User'
 CACHED_AUTH_PREPROCESSOR = 'overtime.apps.users.models.cached_auth_preprocessor'
