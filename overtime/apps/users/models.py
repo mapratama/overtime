@@ -65,6 +65,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         (3, 'produksi', 'Produksi'),
     )
     department = models.PositiveSmallIntegerField(choices=DEPARTMENT, null=True, blank=True)
+    unit_department = models.ForeignKey('departments.Department', related_name='users',
+                                        null=True, blank=True)
     push_notification_key = models.CharField(blank=True, default='', max_length=254)
     is_staff = models.BooleanField('staff status', default=False)
     is_active = models.BooleanField('aktif', default=True)

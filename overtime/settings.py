@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'django_rq',
 
+    'overtime.apps.departments',
     'overtime.apps.users',
     'overtime.apps.forgets',
     'overtime.apps.overtimes',
