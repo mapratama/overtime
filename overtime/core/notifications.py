@@ -65,8 +65,8 @@ def send_manager_notification(user):
 def send_accepted_coordinator_notification(overtime):
     notification_data = {
         'title': 'Koordinator Menyetujui Pengajuan',
-        'body': 'Pengajuan lembur anda telah disetujui koordinator'
-                ' dan pengajuan telah diteruskan kepada manager',
+        'body': 'Pengajuan lembur anda telah disetujui koordinator,'
+                ' silahkan melaksanakan lembur sesuai penjelasan dan catatan',
         'action': 'sync_overtime_details',
         'extra_data': overtime.id
     }

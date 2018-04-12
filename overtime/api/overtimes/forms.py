@@ -66,7 +66,7 @@ class ApprovedCoordinatorForm(forms.Form):
         overtime.notes_coordinator = self.cleaned_data['notes']
         overtime.save()
 
-        send_manager_notification(overtime.user)
+        # send_manager_notification(overtime.user)
         send_accepted_coordinator_notification(overtime)
 
         return overtime
